@@ -126,8 +126,11 @@ public class TicketController {
      */
     @RequestMapping(value = "/ticketAdd", method = RequestMethod.GET)
     public ModelAndView ticketAddPage() {
+        List<Client> clients = ticketService.allClients();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ticketEdit");
+        modelAndView.addObject("clientsList", clients);
         return modelAndView;
     }
 

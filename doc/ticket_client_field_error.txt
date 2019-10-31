@@ -1,0 +1,8 @@
+Field error in object 'ticket' on field 'client':
+rejected value [Client: login=vasia, password=654321, FIO=Вася Владимирович Пупкин, Man=true];
+codes [typeMismatch.ticket.client,typeMismatch.client,typeMismatch.org.dav.ndw.interview.tickets.model.Client,typeMismatch];
+arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ticket.client,client]; arguments [];
+default message [client]];
+default message [Failed to convert property value of type 'java.lang.String' to required type 'org.dav.ndw.interview.tickets.model.Client' for property 'client';
+nested exception is java.lang.IllegalStateException: Cannot convert value of type 'java.lang.String' to required type 'org.dav.ndw.interview.tickets.model.Client' for property 'client':
+no matching editors or conversion strategy found]]

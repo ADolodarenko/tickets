@@ -16,7 +16,7 @@ create sequence ticket_id_seq;
 create table ticket (
   id integer not null default nextval('ticket_id_seq'),
   date date,
-  price money,
+  price double precision,
   client_id int,
   constraint pk_ticket primary key (id),
   constraint fk_ticket_client foreign key (client_id) references client (id)

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: dolodarenko
@@ -33,7 +34,11 @@
                     <tr>
                         <td>Клиент</td>
                         <td>
-                            <!--<input type="text" name="client" id="client" value="${ticket.client}">-->
+                            <select name="client" id="client">
+                                <c:forEach var="client" items="${clientsList}">
+                                    <option value="${client}">${client.login}</option>
+                                </c:forEach>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -45,7 +50,7 @@
                     <tr>
                         <td>Цена</td>
                         <td>
-                            <input type="number" name="price" id="price" value="${ticket.price}">
+                            <input type="number" step="0.01" min="0.01" name="price" id="price" value="${ticket.price}">
                         </td>
                     </tr>
                 </tbody>

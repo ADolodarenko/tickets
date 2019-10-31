@@ -1,10 +1,8 @@
 package org.dav.ndw.interview.tickets.model;
 
-import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -12,7 +10,7 @@ import java.util.Date;
 public class Ticket {
     private int id;
     private Date date;
-    private BigDecimal price;  //money
+    private double price;
     private Client client;
 
     @Id
@@ -36,12 +34,13 @@ public class Ticket {
     }
 
     @Column(name = "price")
-    @Type(type = "org.hibernate.type.BigDecimalType")
-    public BigDecimal getPrice() {
+    //@NumberFormat(style = NumberFormat.Style.CURRENCY)
+    //@Type(type = "org.hibernate.type.BigDecimalType")
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
