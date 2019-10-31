@@ -9,33 +9,32 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <c:if test="${empty client.id}">
-        <title>Добавление клиента</title>
-    </c:if>
-    <c:if test="${!empty client.id}">
-        <title>Редактирование клиента</title>
-    </c:if>
+    <title>${empty client.id ? "Добавление клиента" : "Редактирование клиента"}</title>
 </head>
 <body>
     <header>
         <div class="header-image">
             <div class="header-text">
-                <c:if test="${empty client.id}">
-                    <h2>Новый клиент</h2>
-                </c:if>
-                <c:if test="${!empty client.id}">
-                    <h2>Клиент ${client.id}</h2>
-                </c:if>
+                <c:choose>
+                    <c:when test="${empty client.id}">
+                        <h2>Новый клиент</h2>
+                    </c:when>
+                    <c:otherwise>
+                        <h2>Клиент ${client.id}</h2>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </header>
     <div>
-        <c:if test="${empty client.id}">
-            <c:url value="/clientAdd" var="var"/>
-        </c:if>
-        <c:if test="${!empty client.id}">
-            <c:url value="/clientEdit" var="var"/>
-        </c:if>
+        <c:choose>
+            <c:when test="${empty client.id}">
+                <c:url value="/clientAdd" var="var"/>
+            </c:when>
+            <c:otherwise>
+                <c:url value="/clientEdit" var="var"/>
+            </c:otherwise>
+        </c:choose>
 
         <form action="${var}" method="post">
             <table class="blueTable">
@@ -74,14 +73,33 @@
                     <tr>
                         <td>Пол</td>
                         <td>
-                            <input type="checkbox" name="sex" id="sex" value="${client.sex}">
+                            <select name="sex" id="sex">
+                                <c:choose>
+                                    <c:when test="${empty client.id}">
+                                        <option value="true" selected>Мужской</option>
+                                        <option value="false">Женский</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:choose>
+                                            <c:when test="${client.sex==true}">
+                                                <option value="true" selected>Мужской</option>
+                                                <option value="false">Женский</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="true">Мужской</option>
+                                                <option value="false" selected>Женский</option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="2" align="center">
-                            <input type="submit" value="Сохранить"><a href="/tickets"><input type="button" value="Отмена"></a>
+                            <input type="submit" value="Сохранить"><a href="/tickets/clients"><input type="button" value="Отмена"></a>
                         </td>
                     </tr>
                 </tfoot>

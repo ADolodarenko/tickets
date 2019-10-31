@@ -1,7 +1,8 @@
 package org.dav.ndw.interview.tickets.controller;
 
 import org.dav.ndw.interview.tickets.model.Client;
-import org.dav.ndw.interview.tickets.service.ClientService;
+import org.dav.ndw.interview.tickets.model.Ticket;
+import org.dav.ndw.interview.tickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,19 +15,29 @@ import java.util.List;
 
 @Controller
 public class TicketController {
-    private ClientService clientService;
+    private TicketService ticketService;
 
     @Autowired
-    public void setClientService(ClientService clientService) {
-        this.clientService = clientService;
+    public void setTicketService(TicketService ticketService) {
+        this.ticketService = ticketService;
+    }
+
+    /**
+     * @return ModelAndView for the main page.
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView mainPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        return modelAndView;
     }
 
     /**
      * @return ModelAndView for the list of clients.
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/clients", method = RequestMethod.GET)
     public ModelAndView allClients() {
-        List<Client> clients = clientService.allClients();
+        List<Client> clients = ticketService.allClients();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("clients");
@@ -40,7 +51,7 @@ public class TicketController {
      */
     @RequestMapping(value = "/clientEdit/{id}", method = RequestMethod.GET)
     public ModelAndView clientEditPage(@PathVariable("id") int id) {
-        Client client = clientService.getById(id);
+        Client client = ticketService.getClientById(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("clientEdit");
         modelAndView.addObject("client", client);
@@ -65,8 +76,8 @@ public class TicketController {
     @RequestMapping(value = "/clientEdit", method = RequestMethod.POST)
     public ModelAndView clientEdit(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");  //redirect:clients ?
-        clientService.edit(client);
+        modelAndView.setViewName("redirect:/clients");  //redirect:clients ?
+        ticketService.editClient(client);
         return modelAndView;
     }
 
@@ -78,8 +89,8 @@ public class TicketController {
     @RequestMapping(value = "/clientAdd", method = RequestMethod.POST)
     public ModelAndView clientAdd(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");  //redirect:clients ?
-        clientService.add(client);
+        modelAndView.setViewName("redirect:/clients");  //redirect:clients ?
+        ticketService.addClient(client);
         return modelAndView;
     }
 
@@ -91,9 +102,59 @@ public class TicketController {
     @RequestMapping(value = "/clientDelete/{id}", method = RequestMethod.GET)
     public ModelAndView clientDelete(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");  //redirect:clients ?
-        Client client = clientService.getById(id);
-        clientService.delete(client);
+        modelAndView.setViewName("redirect:/clients");  //redirect:clients ?
+        Client client = ticketService.getClientById(id);
+        ticketService.deleteClient(client);
+        return modelAndView;
+    }
+
+    /**
+     * @return ModelAndView for the list of tickets.
+     */
+    @RequestMapping(value = "/tickets", method = RequestMethod.GET)
+    public ModelAndView allTickets() {
+        List<Ticket> tickets = ticketService.allTickets();
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("tickets");
+        modelAndView.addObject("ticketsList", tickets);
+        return modelAndView;
+    }
+
+    /**
+     * @return ModelAndView for the page for editing new ticket.
+     */
+    @RequestMapping(value = "/ticketAdd", method = RequestMethod.GET)
+    public ModelAndView ticketAddPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("ticketEdit");
+        return modelAndView;
+    }
+
+    /**
+     * Saves new ticket.
+     * @param ticket - a Ticket that needs to be added.
+     * @return ModelAndView for the list of tickets.
+     */
+    @RequestMapping(value = "/ticketAdd", method = RequestMethod.POST)
+    public ModelAndView ticketAdd(@ModelAttribute("ticket") Ticket ticket) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/tickets");
+        ticketService.addTicket(ticket);
+        return modelAndView;
+    }
+
+    /**
+     * Deletes existing ticket.
+     * @param id - ID of the ticket that needs to be deleted.
+     * @return ModelAndView for the list of tickets.
+     */
+    @RequestMapping(value = "/ticketDelete/{id}", method = RequestMethod.GET)
+    public ModelAndView ticketDelete(@PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/tickets");
+        Ticket ticket = ticketService.getTicketById(id);
+        ticketService.deleteTicket(ticket);
         return modelAndView;
     }
 }
