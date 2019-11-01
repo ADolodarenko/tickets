@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Добавление билета</title>
+    <link href="<c:url value="/res/style.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <header>
@@ -36,7 +37,7 @@
                         <td>
                             <select name="client" id="client">
                                 <c:forEach var="client" items="${clientsList}">
-                                    <option value="${client}">${client.login}</option>
+                                    <option value="${client.id}">${client.fullName}</option>
                                 </c:forEach>
                             </select>
                         </td>

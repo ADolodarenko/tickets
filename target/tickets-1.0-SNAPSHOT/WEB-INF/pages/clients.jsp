@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Клиенты</title>
+    <link href="<c:url value="/res/style.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <header>
@@ -20,14 +21,15 @@
         </div>
     </header>
     <div>
-        <table>
+        <table class="blueTable">
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Логин</th>
-                    <th>Пароль</th>
+                    <!--<th>Пароль</th>-->
                     <th>ФИО</th>
                     <th>Пол</th>
+                    <th>*</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,12 +37,12 @@
                     <tr>
                         <td>${client.id}</td>
                         <td>${client.login}</td>
-                        <td>${client.password}</td>
+                        <!--<td>${client.password}</td>-->
                         <td>${client.fullName}</td>
                         <td>${client.sex}</td>
-                        <td>
-                            <a href="clientEdit/${client.id}">edit</a>
-                            <a href="clientDelete/${client.id}">delete</a>
+                        <td class="links">
+                            <a href="clientEdit/${client.id}">Изменить</a>
+                            <a href="clientDelete/${client.id}">Удалить</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -49,7 +51,10 @@
                 <tr>
                     <td colspan="7" align="center">
                         <c:url value="clientAdd" var="add"/>
-                        <a href="${add}">Добавить клиента</a>
+                        <div class="links">
+                            <a href="/tickets">Главная</a>
+                            <a href="${add}">Добавить</a>
+                        </div>
                     </td>
                 </tr>
             </tfoot>

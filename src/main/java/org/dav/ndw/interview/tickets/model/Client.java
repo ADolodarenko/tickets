@@ -1,8 +1,12 @@
 package org.dav.ndw.interview.tickets.model;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -12,17 +16,9 @@ public class Client {
     private String password;
     private String fullName;
     private boolean sex;
-    private List<Ticket> tickets;
+    private Set<Ticket> tickets = new HashSet<>();
 
     public Client() {}
-
-    public Client(String login, String password, String fullName, boolean sex) {
-        this.login = login;
-        this.password = password;
-        this.fullName = fullName;
-        this.sex = sex;
-        tickets = new ArrayList<>();
-    }
 
     @Id
     @Column(name = "id")
@@ -36,6 +32,7 @@ public class Client {
     }
 
     @Column(name = "login")
+    @NotBlank(message = "Некорректный логин.")
     public String getLogin() {
         return login;
     }
@@ -45,6 +42,7 @@ public class Client {
     }
 
     @Column(name = "password")
+    @NotBlank(message = "Некорректный пароль.")
     public String getPassword() {
         return password;
     }
@@ -54,6 +52,7 @@ public class Client {
     }
 
     @Column(name = "fullname")
+    @NotBlank(message = "Некорректное ФИО.")
     public String getFullName() {
         return fullName;
     }
@@ -72,12 +71,29 @@ public class Client {
     }
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Ticket> getTickets() {
+    public Set<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(List<Ticket> tickets) {
+    public void setTickets(Set<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id == client.id &&
+                sex == client.sex &&
+                Objects.equals(login, client.login) &&
+                Objects.equals(password, client.password) &&
+                Objects.equals(fullName, client.fullName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, fullName, sex);
     }
 
     @Override

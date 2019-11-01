@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Билеты</title>
+    <link href="<c:url value="/res/style.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <header>
@@ -20,13 +21,14 @@
         </div>
     </header>
     <div>
-        <table>
+        <table class="blueTable">
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Дата</th>
                     <th>Цена</th>
                     <th>Клиент</th>
+                    <th>*</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,9 +37,9 @@
                         <td>${ticket.id}</td>
                         <td>${ticket.date}</td>
                         <td>${ticket.price}</td>
-                        <td>${ticket.client}</td>
-                        <td>
-                            <a href="ticketDelete/${ticket.id}">delete</a>
+                        <td>${ticket.client.fullName}</td>
+                        <td class="links">
+                            <a href="ticketDelete/${ticket.id}">Удалить</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -46,7 +48,10 @@
                 <tr>
                     <td colspan="7" align="center">
                         <c:url value="ticketAdd" var="add"/>
-                        <a href="${add}">Добавить билет</a>
+                        <div class="links">
+                            <a href="/tickets">Главная</a>
+                            <a href="${add}">Добавить</a>
+                        </div>
                     </td>
                 </tr>
             </tfoot>

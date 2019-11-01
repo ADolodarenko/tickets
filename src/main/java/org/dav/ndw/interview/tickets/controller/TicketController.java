@@ -5,12 +5,15 @@ import org.dav.ndw.interview.tickets.model.Ticket;
 import org.dav.ndw.interview.tickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -74,10 +77,21 @@ public class TicketController {
      * @return ModelAndView for the list of clients.
      */
     @RequestMapping(value = "/clientEdit", method = RequestMethod.POST)
-    public ModelAndView clientEdit(@ModelAttribute("client") Client client) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/clients");  //redirect:clients ?
-        ticketService.editClient(client);
+    public ModelAndView clientEdit(@Valid @ModelAttribute("client") Client client, BindingResult result) {
+        ModelAndView modelAndView;
+
+        if (result.hasErrors()) {
+            List<FieldError> errorsList = result.getFieldErrors();
+            modelAndView = new ModelAndView("clientEdit");
+            modelAndView.addObject("errors", errorsList);
+            modelAndView.addObject("client", client);
+        } else {
+            ticketService.editClient(client);
+
+            modelAndView = new ModelAndView();
+            modelAndView.setViewName("redirect:/clients");
+        }
+
         return modelAndView;
     }
 
@@ -87,10 +101,21 @@ public class TicketController {
      * @return ModelAndView for the list of clients.
      */
     @RequestMapping(value = "/clientAdd", method = RequestMethod.POST)
-    public ModelAndView clientAdd(@ModelAttribute("client") Client client) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/clients");  //redirect:clients ?
-        ticketService.addClient(client);
+    public ModelAndView clientAdd(@Valid @ModelAttribute("client") Client client, BindingResult result) {
+        ModelAndView modelAndView;
+
+        if (result.hasErrors()) {
+            List<FieldError> errorsList = result.getFieldErrors();
+            modelAndView = new ModelAndView("redirect:/clientAdd", result.getModel());
+            //modelAndView.addObject("errors", errorsList);
+            //modelAndView.addObject("client", client);
+        } else {
+            ticketService.addClient(client);
+
+            modelAndView = new ModelAndView();
+            modelAndView.setViewName("redirect:/clients");
+        }
+
         return modelAndView;
     }
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: dolodarenko
@@ -9,6 +10,7 @@
 <html>
 <head>
     <title>Клиенты и билеты</title>
+    <link href="<c:url value="/res/style.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <header>
@@ -19,17 +21,21 @@
         </div>
     </header>
     <div>
-        <table>
-            <tbody>
+        <table class="blueTable">
+            <tfoot>
                 <tr>
                     <td>
-                        <a href="clients">Клиенты</a>
+                        <div class="links">
+                            <a href="clients">Клиенты</a>
+                        </div>
                     </td>
                     <td>
-                        <a href="tickets">Билеты</a>
+                        <div class="links">
+                            <a href="tickets">Билеты</a>
+                        </div>
                     </td>
                 </tr>
-            </tbody>
+            </tfoot>
         </table>
     </div>
 </body>
