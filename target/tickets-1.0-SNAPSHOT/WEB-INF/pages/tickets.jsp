@@ -1,12 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: dolodarenko
-  Date: 30.10.2019
-  Time: 17:35
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Билеты</title>
@@ -35,7 +29,9 @@
                 <c:forEach var="ticket" items="${ticketsList}">
                     <tr>
                         <td>${ticket.id}</td>
-                        <td>${ticket.date}</td>
+                        <td>
+                            <fmt:formatDate value="${ticket.date}" pattern="dd.MM.yyyy"/>
+                        </td>
                         <td>${ticket.price}</td>
                         <td>${ticket.client.fullName}</td>
                         <td class="links">

@@ -1,12 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: dolodarenko
-  Date: 30.10.2019
-  Time: 10:32
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Клиенты</title>
@@ -26,7 +19,6 @@
                 <tr>
                     <th>Id</th>
                     <th>Логин</th>
-                    <!--<th>Пароль</th>-->
                     <th>ФИО</th>
                     <th>Пол</th>
                     <th>*</th>
@@ -37,9 +29,10 @@
                     <tr>
                         <td>${client.id}</td>
                         <td>${client.login}</td>
-                        <!--<td>${client.password}</td>-->
                         <td>${client.fullName}</td>
-                        <td>${client.sex}</td>
+                        <td>
+                            ${client.sex==true ? "Мужской" : "Женский"}
+                        </td>
                         <td class="links">
                             <a href="clientEdit/${client.id}">Изменить</a>
                             <a href="clientDelete/${client.id}">Удалить</a>

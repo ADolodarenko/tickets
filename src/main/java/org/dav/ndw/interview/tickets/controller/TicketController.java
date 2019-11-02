@@ -106,9 +106,9 @@ public class TicketController {
 
         if (result.hasErrors()) {
             List<FieldError> errorsList = result.getFieldErrors();
-            modelAndView = new ModelAndView("redirect:/clientAdd", result.getModel());
-            //modelAndView.addObject("errors", errorsList);
-            //modelAndView.addObject("client", client);
+            modelAndView = new ModelAndView("redirect:/clientAdd");
+            modelAndView.addObject("errors", errorsList);
+            modelAndView.addObject("client", client);
         } else {
             ticketService.addClient(client);
 
@@ -127,7 +127,7 @@ public class TicketController {
     @RequestMapping(value = "/clientDelete/{id}", method = RequestMethod.GET)
     public ModelAndView clientDelete(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/clients");  //redirect:clients ?
+        modelAndView.setViewName("redirect:/clients");
         Client client = ticketService.getClientById(id);
         ticketService.deleteClient(client);
         return modelAndView;
@@ -165,10 +165,21 @@ public class TicketController {
      * @return ModelAndView for the list of tickets.
      */
     @RequestMapping(value = "/ticketAdd", method = RequestMethod.POST)
-    public ModelAndView ticketAdd(@ModelAttribute("ticket") Ticket ticket) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/tickets");
-        ticketService.addTicket(ticket);
+    public ModelAndView ticketAdd(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result) {
+        ModelAndView modelAndView;
+
+        if (result.hasErrors()) {
+            List<FieldError> errorsList = result.getFieldErrors();
+            modelAndView = new ModelAndView("redirect:/ticketAdd");
+            modelAndView.addObject("errors", errorsList);
+            modelAndView.addObject("ticket", ticket);
+        } else {
+            ticketService.addTicket(ticket);
+
+            modelAndView = new ModelAndView();
+            modelAndView.setViewName("redirect:/tickets");
+        }
+
         return modelAndView;
     }
 
