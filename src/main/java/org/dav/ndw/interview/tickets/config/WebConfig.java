@@ -1,11 +1,13 @@
 package org.dav.ndw.interview.tickets.config;
 
 import org.dav.ndw.interview.tickets.converter.ClientConverter;
+import org.dav.ndw.interview.tickets.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -22,6 +24,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     public void setClientConverter(ClientConverter clientConverter) {
         this.clientConverter = clientConverter;
+    }
+
+    @Bean
+    public UserDetailsService getUserDetailsService() {
+        return new UserDetailsServiceImpl();
     }
 
     @Bean

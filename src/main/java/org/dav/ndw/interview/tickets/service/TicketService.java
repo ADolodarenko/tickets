@@ -11,6 +11,7 @@ public interface TicketService {
     void editClient(Client client);
     void deleteClient(Client client);
     Client getClientById(int id);
+    Client getClientByLogin(String login);
     List<Ticket> allTickets();
     void addTicket(Ticket ticket);
     void deleteTicket(Ticket ticket);

@@ -26,6 +26,16 @@ public class TicketController {
     }
 
     /**
+     * @return ModelAndView for the login page.
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView loginPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+    /**
      * @return ModelAndView for the main page.
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)

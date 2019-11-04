@@ -4,6 +4,7 @@ import org.dav.ndw.interview.tickets.model.Client;
 import org.dav.ndw.interview.tickets.model.Ticket;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +22,7 @@ public class TicketDAOImpl implements TicketDAO {
     @Override
     public List<Client> allClients() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Client").list();
+        return session.createQuery("from Client order by id").list();
     }
 
     @Override
@@ -46,6 +47,16 @@ public class TicketDAOImpl implements TicketDAO {
     public Client getClientById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Client.class, id);
+    }
+
+    @Override
+    public Client getClientByLogin(String login) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from Client where login = :login");
+        query.setParameter("login", login);
+
+        List<Client> resultList = query.getResultList();
+        return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override

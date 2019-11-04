@@ -1,7 +1,5 @@
 package org.dav.ndw.interview.tickets.model;
 
-import org.springframework.lang.NonNull;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
