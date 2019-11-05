@@ -13,4 +13,5 @@ public interface Constants {
     String DB_PASSWORD = "jdbc.password";
     String DB_HIBERNATE_DIALECT = "hibernate.dialect";
     String DB_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
+    String EX_USER_NOT_FOUND = "Пользователь не найден";
 }

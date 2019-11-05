@@ -29,6 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
             userDetails = new User(client.getLogin(), client.getPassword(), roles);
         }
+        else throw new UsernameNotFoundException("Пользователь не найден");
 
         return userDetails;
     }
