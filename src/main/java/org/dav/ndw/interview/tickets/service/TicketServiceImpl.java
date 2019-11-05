@@ -49,6 +49,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public Client getClientByLogin(String login) {
         return ticketDAO.getClientByLogin(login);
     }

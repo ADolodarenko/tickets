@@ -14,7 +14,7 @@
         </div>
     </header>
     <div>
-        <c:url value="/tickets/j_spring_security_check" var="loginUrl" />
+        <c:url value="/j_spring_security_check" var="loginUrl" />
         <form action="${loginUrl}" method="post">
             <table class="blueTable">
                 <tbody>
