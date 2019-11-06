@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Добавление билета</title>
@@ -13,18 +14,19 @@
             </div>
         </div>
     </header>
-    <div>
-        <c:url value="/ticketAdd" var="var"/>
+    <sec:authorize access="isAuthenticated()">
+        <div>
+            <c:url value="/ticketAdd" var="var"/>
 
-        <form action="${var}" method="post">
-            <table class="blueTable">
-                <thead>
+            <form action="${var}" method="post">
+                <table class="blueTable">
+                    <thead>
                     <tr>
                         <th>Параметр</th>
                         <th>Значение</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <tr>
                         <td>Клиент</td>
                         <td>
@@ -47,27 +49,43 @@
                             <input type="number" step="0.01" min="0.01" name="price" id="price" value="${ticket.price}">
                         </td>
                     </tr>
-                </tbody>
-                <tfoot>
+                    </tbody>
+                    <tfoot>
                     <tr>
                         <td colspan="2" align="center">
                             <input type="submit" value="Сохранить"><a href="/tickets/tickets"><input type="button" value="Отмена"></a>
                         </td>
                     </tr>
+                    </tfoot>
+                </table>
+            </form>
+        </div>
+        <div>
+            <table class="errors">
+                <tbody>
+                <c:forEach var="error" items="${errors}">
+                    <tr>
+                        <td>${error.defaultMessage}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </sec:authorize>
+    <sec:authorize access="!isAuthenticated()">
+        <div>
+            <table class="blueTable">
+                <tfoot>
+                <tr>
+                    <td colspan="2" align="center">
+                        <div class="links">
+                            <a href="<c:url value="/login" />">Войти</a>
+                        </div>
+                    </td>
+                </tr>
                 </tfoot>
             </table>
-        </form>
-    </div>
-    <div>
-        <table class="errors">
-            <tbody>
-            <c:forEach var="error" items="${errors}">
-                <tr>
-                    <td>${error.defaultMessage}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
+        </div>
+    </sec:authorize>
 </body>
 </html>

@@ -20,16 +20,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Client client = ticketService.getClientByLogin(s);
-        UserDetails userDetails = null;
 
-        if (client != null) {
-            //TODO: set the real roles from DB here.
-            Set<GrantedAuthority> roles = new HashSet<>();
-            roles.add(new SimpleGrantedAuthority("USER"));
+        if (client == null)
+            throw new UsernameNotFoundException("There's not such client.");
 
-            userDetails = new User(client.getLogin(), client.getPassword(), roles);
-        }
-        else throw new UsernameNotFoundException("Пользователь не найден");
+        //TODO: set the real roles from DB here.
+        Set<GrantedAuthority> roles = new HashSet<>();
+        roles.add(new SimpleGrantedAuthority("USER"));
+
+        UserDetails userDetails = new User(client.getLogin(), "{noop}" + client.getPassword(), roles);
 
         return userDetails;
     }

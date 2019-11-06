@@ -16,18 +16,22 @@
     <div>
         <c:url value="/j_spring_security_check" var="loginUrl" />
         <form action="${loginUrl}" method="post">
-            <table class="blueTable">
+            <table align="center">
                 <tbody>
                     <tr>
-                        <td>Логин</td>
-                        <td>
-                            <input type="text" name="j_username" required autofocus value="">
+                        <td align="right">
+                            Логин
+                        </td>
+                        <td align="left">
+                            <input type="text" name="j_username" id="user" required autofocus value="">
                         </td>
                     </tr>
                     <tr>
-                        <td>Пароль</td>
-                        <td>
-                            <input type="password" name="j_password" required autofocus value="">
+                        <td align="right">
+                            Пароль
+                        </td>
+                        <td align="left">
+                            <input type="password" name="j_password" id="password" required value="">
                         </td>
                     </tr>
                     <tr>

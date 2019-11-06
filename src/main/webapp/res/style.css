@@ -85,3 +85,7 @@ table.blueTable tfoot .links a{
     padding: 2px 8px;
     border-radius: 5px;
 }
+
+form.login {
+    text-align: center;
+}
